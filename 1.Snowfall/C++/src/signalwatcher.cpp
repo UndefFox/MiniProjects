@@ -2,9 +2,7 @@
 
 #include <csignal>
 
-
 #include "forwardlist.hpp"
-
 
 
 namespace {
@@ -22,8 +20,7 @@ SignalWatcher::SignalWatcher() :
 	subscribers.emplace_front(this);
 }
 
-SignalWatcher::~SignalWatcher()
-{
+SignalWatcher::~SignalWatcher() {
 	subscribers.erase(this);
 
 	if (subscribers.empty()) {
@@ -32,16 +29,14 @@ SignalWatcher::~SignalWatcher()
 	}
 }
 
-bool SignalWatcher::checkAndClearFlag(WatcherEvents index)
-{
+bool SignalWatcher::checkAndClearFlag(WatcherEvents index) {
 	bool result = flags[(watcherEventsType_t)index].test();
 	flags[(watcherEventsType_t)index].clear();
 
 	return result;
 }
 
-void SignalWatcher::notifyWatchers(WatcherEvents flag)
-{
+void SignalWatcher::notifyWatchers(WatcherEvents flag) {
 	for (auto& watcher : subscribers) {
 		watcher->flags[(watcherEventsType_t)flag].test_and_set();
 	}

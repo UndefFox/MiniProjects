@@ -4,7 +4,6 @@
 #include <atomic>
 
 
-
 typedef unsigned char watcherEventsType_t;
 /** @brief The list of available interupts to watch.
  *

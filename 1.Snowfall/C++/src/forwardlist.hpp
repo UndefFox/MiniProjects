@@ -3,7 +3,6 @@
 #include <atomic>
 
 
-
 /** @brief A lock-free forward list class
 *
 *   For multi-thread use:

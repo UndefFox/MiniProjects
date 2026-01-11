@@ -1,11 +1,20 @@
 cmake_minimum_required(VERSION 3.24.1)
 
-project(SnowFall VERSION 1.0.0)
+project(SnowFall VERSION 2.0.0)
 
 set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 set(CMAKE_INTERPROCEDURAL_OPTIMIZATION TRUE)
+
+
+if (MSVC)
+    add_compile_options(/arch:AVX2)
+else ()
+    add_compile_options(-mavx2)
+endif ()
+add_compile_options(-O3)
+
 
 add_executable(snowfall)
 target_sources(snowfall
@@ -14,6 +23,7 @@ target_sources(snowfall
         src/signalwatcher.cpp src/signalwatcher.h
         src/forwardlist.hpp
         src/particleengine.cpp src/particleengine.h
+        src/avx2prng.cpp src/avx2prng.h
 )
 
 install(TARGETS snowfall

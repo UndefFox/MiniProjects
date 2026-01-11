@@ -2,6 +2,8 @@
 
 #include <vector>
 #include <string>
+#include <cstdint>
+#include <new>
 
 
 /** @brief Simple snowfall simulation.
@@ -10,24 +12,47 @@
  *  them with rendering to the buffer.
  */
 class ParticleEngine {
+public:
+    typedef uint16_t cords_t;
+
 private:
-	struct Particle {
-		unsigned int x;
-		unsigned int y;
-	};
+    template <typename T, int alligment>
+    struct AlignedAllocator {
+        typedef T value_type;
+
+        inline T* allocate(std::size_t n) {
+            return static_cast<T*>(::operator new(n * sizeof(T), std::align_val_t(alligment)));
+        }
+
+        inline void deallocate(T* p, std::size_t n) noexcept {
+            ::operator delete(p, std::align_val_t(alligment));
+        }
+
+        template<typename U>
+        struct rebind { using other = AlignedAllocator<U, alligment>; };
+    };
 
 	struct ParticleArchetype {
-		std::vector<Particle> particles;
-		unsigned char symbol;
-		int speed;
+        struct Particls {
+            std::vector<uint16_t, AlignedAllocator<uint16_t, 32>> x;
+            std::vector<uint16_t, AlignedAllocator<uint16_t, 32>> y;
+            std::size_t highestParticleIndex;
 
-		ParticleArchetype(unsigned char symbol, int speed, unsigned int count);
+            inline void resize(std::size_t n) { x.resize(n); y.resize(n); }
+            inline void reserve(std::size_t n) { x.reserve(n); y.reserve(n); }
+            inline std::size_t size() { return x.size(); }
+        } particles;
+
+		unsigned char symbol;
+        cords_t speed;
+
+        ParticleArchetype(unsigned char symbol, cords_t speed, std::size_t count);
 	};
 
 
 private:
 	unsigned int fps = 30;
-	std::string buffer;
+    std::basic_string<char, std::char_traits<char>, AlignedAllocator<char, 32>> buffer;
 	std::vector<ParticleArchetype> archetypes;
 	unsigned int width;
 	unsigned int height;
@@ -75,7 +100,4 @@ public:
 	 *  The screen isn't cleared automatically.
 	 */
 	void display() const;
-
-private:
-	unsigned int coordinatesToBufferIndex(unsigned int x, unsigned int y) const;
 };

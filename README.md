@@ -16,4 +16,4 @@ Each implementation has its own README.md file, which provides details about tha
 
 ## <a id="snowfall">Snowfall</a>
 
-[This](https://github.com/UndefFox/MiniProjects/tree/master/1.%20Snowfall) project was my first experience writing a small console application to explore basic concepts: receiving UNIX signals and handling them properly, retrieving input parameters in the standard way (getopt), and processing them.
+[This](https://github.com/UndefFox/MiniProjects/tree/master/1.Snowfall) project was my first experience writing a small console application to explore basic concepts: receiving UNIX signals and handling them properly, retrieving input parameters in the standard way (getopt), and processing them, with some simple use of SIMD (AVX2) to make it better handle larger number of particles.
