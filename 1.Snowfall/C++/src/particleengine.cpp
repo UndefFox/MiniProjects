@@ -58,19 +58,20 @@ void ParticleEngine::setFPS(unsigned int newFPS) {
 
 void ParticleEngine::tick() {
     __m256i heightV = _mm256_set1_epi16(height);
-    __m256i widthV = _mm256_set1_epi16(width);
+    __m256i widthV = _mm256_set1_epi32(width);
     AVX2_PRNG_Generator gen{};
 
     std::memset(buffer.data(), ' ', buffer.size());
 
     for (auto& arche : archetypes) {
         const __m256i speedV = _mm256_set1_epi16(arche.speed);
-        const auto particle_count = arche.particles.size();
 
         cords_t* x = arche.particles.x.data();
         cords_t* y = arche.particles.y.data();
 
-        for (int i = 0; i < particle_count; i += CORDS_PER_LINE) {
+        bool flag = true;
+        const auto particle_count = arche.particles.size();
+        for (int i = 0; flag ;) {
             __m256i xV = _mm256_load_si256((const __m256i*) x);
             __m256i yV = _mm256_load_si256((const __m256i*) y);
 
@@ -94,15 +95,30 @@ void ParticleEngine::tick() {
 
             _mm256_store_si256((__m256i*) y, yV);
 
-            __m256i cordsV = _mm256_mullo_epi16(yV, widthV);
-            cordsV = _mm256_add_epi16(cordsV, xV);
+            alignas(32) uint32_t cords[16];
 
-            alignas(32) cords_t cords[16];
 
-            _mm256_store_si256((__m256i*) cords, cordsV);
+            __m256i yH = _mm256_cvtepu16_epi32(_mm256_extracti128_si256(yV, 0));
+            __m256i xH = _mm256_cvtepu16_epi32(_mm256_extracti128_si256(xV, 0));
+            __m256i cordsV = _mm256_mullo_epi32(yH, widthV);
+            cordsV = _mm256_add_epi32(cordsV, xH);
+            _mm256_store_si256((__m256i*) (cords), cordsV);
+
+            yH = _mm256_cvtepu16_epi32(_mm256_extracti128_si256(yV, 1));
+            xH = _mm256_cvtepu16_epi32(_mm256_extracti128_si256(xV, 1));
+            cordsV = _mm256_mullo_epi32(yH, widthV);
+            cordsV = _mm256_add_epi32(cordsV, xH);
+            _mm256_store_si256((__m256i*) (cords + 8), cordsV);
+
 
             for (auto p : cords) {
-                buffer[p] = arche.symbol;
+                if (i++ == particle_count) {
+                    flag = false;
+                    break;
+                }
+                else {
+                    buffer[p] = arche.symbol;
+                }
             }
 
             x += CORDS_PER_LINE;
@@ -119,7 +135,6 @@ void ParticleEngine::display() const {
     }
     std::cout << view.substr(view.size() - width, width) << std::flush;
 }
-
 
 ParticleEngine::ParticleArchetype::ParticleArchetype(unsigned char symbol, cords_t speed, std::size_t count) :
     symbol(symbol),
