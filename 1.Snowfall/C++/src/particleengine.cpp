@@ -81,7 +81,14 @@ void ParticleEngine::tick() {
             const __m256i not_mask = _mm256_andnot_si256(mask, _mm256_set1_epi16(-1));
 
             if (!_mm256_testz_si256(not_mask, not_mask)) {
+                const __m256i newYV = gen.newRanged16(arche.speed);
+
                 yV = _mm256_and_si256(yV, mask);
+
+                yV = _mm256_or_si256(
+                    _mm256_and_si256(not_mask, newYV),
+                    _mm256_and_si256(mask, yV)
+                );
 
                 const __m256i newXV = gen.newRanged16(width);
 
