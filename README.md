@@ -12,6 +12,7 @@ Each implementation has its own README.md file, which provides details about tha
 
 1. [Snowfall](#snowfall)
 2. [Old Comutator](#oldcom)
+3. [Preview Renderer](#previewrenderer)
 
 ---
 
@@ -23,3 +24,8 @@ Each implementation has its own README.md file, which provides details about tha
 ## <a id="oldcom">Old Comutator</a>
 
 [This](https://github.com/UndefFox/MiniProjects/tree/master/2.OldComutator) one was my first time implementing proper multi-threaded logic and working with sockets, combined into a piece of software that actually sends data over the network in an encrypted way.
+
+
+## <a id="previewrenderer">Preview Renderer</a>
+
+[This](https://github.com/UndefFox/MiniProjects/tree/master/3.PreviewRenderer) is my first steps in doing rendering on a GPU via a proper Vulkan. Mainly done to practice organizing bigger codebase with clear design. The code itself isn't more complex than [official guide](https://vulkan-tutorial.com/), but has a sprinkle of managing memory for offscreen rendering and nice math algorithms.
