@@ -2,6 +2,12 @@
 
 The implementation is simple: a ParticleEngine that generates a simple snowfall animation. To handle leaving the program and dynamically updating the resolution, a SignalWatcher class was introduced to provide a simple way for receiving and handling signals. It's based on a global subscription list that is iterated over on signal arrival. The list is specifically designed to always stay in an iterable state when accessed from a single thread at once. AVX2 is used to optimize calculation of larger numbers of particles. Structures are properly aligned to minimize cache misses. 
 
+# Example of work
+
+The animation that is created by default command provided in the help message:
+<br>
+[](./docs/example.mkv)
+
 ### Points of interest
 
 - src/signalwatcher.h : SignalWatcher class - Handling signals with buffered flags.
