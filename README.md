@@ -13,6 +13,7 @@ Each implementation has its own README.md file, which provides details about tha
 1. [Snowfall](#snowfall)
 2. [Old Comutator](#oldcom)
 3. [Preview Renderer](#previewrenderer)
+4. [Fox Benchmark](#foxbenchmark)
 
 ---
 
@@ -29,3 +30,7 @@ Each implementation has its own README.md file, which provides details about tha
 ## <a id="previewrenderer">Preview Renderer</a>
 
 [This](https://github.com/UndefFox/MiniProjects/tree/master/3.PreviewRenderer) is my first steps in doing rendering on a GPU via a proper Vulkan. Mainly done to practice organizing bigger codebase with clear design. The code itself isn't more complex than [official guide](https://vulkan-tutorial.com/), but has a sprinkle of managing memory for offscreen rendering and nice math algorithms.
+
+## <a id="foxbenchmark">Fox Benchmark</a>
+
+[This assignment](https://github.com/UndefFox/MiniProjects/tree/master/4.CPUBenchmark)  was given to practice the basics of fast math implementation, but curiosity got the best of me, and I tried to achieve the maximum performance possible. Using a few research papers and help from other people, I've managed to achieve ~75% of the CBLAS library's performance while keeping the code relatively simple for a benchmark project.
