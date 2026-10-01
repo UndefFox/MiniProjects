@@ -11,7 +11,7 @@ set(CMAKE_INTERPROCEDURAL_OPTIMIZATION TRUE)
 # ----- Packages -----
 
 find_package(Catch2 3)
-find_package(BLAS REQUIRED)
+find_package(BLAS)
 
 
 # ----- Sources -----
@@ -34,10 +34,13 @@ target_compile_options(squarematrix PRIVATE
     -mavx2
     -mfma
 )
-target_link_libraries(squarematrix
-PRIVATE
-    BLAS::BLAS
-)
+
+if (BLAS_FOUND)
+    target_link_libraries(squarematrix
+    PRIVATE
+        BLAS::BLAS
+    )
+endif()
 
 add_executable(foxbench)
 target_sources(foxbench
