@@ -11,7 +11,7 @@ Each implementation has its own README.md file, which provides details about tha
 ### Projects
 
 1. [Snowfall](#snowfall)
-2. [Old Comutator](#oldcom)
+2. [NetMesh](#netmesh)
 3. [Preview Renderer](#previewrenderer)
 4. [Fox Benchmark](#foxbenchmark)
 
@@ -22,9 +22,9 @@ Each implementation has its own README.md file, which provides details about tha
 [This](https://github.com/UndefFox/MiniProjects/tree/master/1.Snowfall) project was my first experience writing a small console application to explore basic concepts: receiving UNIX signals and handling them properly, retrieving input parameters in the standard way (getopt), and processing them, with some simple use of SIMD (AVX2) to make it better handle larger number of particles.
 
 
-## <a id="oldcom">Old Comutator</a>
+## <a id="netmesh">NetMesh</a>
 
-[This](https://github.com/UndefFox/MiniProjects/tree/master/2.OldComutator) one was my first time implementing proper multi-threaded logic and working with sockets, combined into a piece of software that actually sends data over the network in an encrypted way.
+[This](https://github.com/UndefFox/MiniProjects/tree/master/2.NetMesh) one was my first time implementing proper multithreaded logic and working with sockets, combined into a piece of software that actually sends data over the network in an encrypted way. Packed with a TUI, simultaneous chats, and basic controls.
 
 
 ## <a id="previewrenderer">Preview Renderer</a>
